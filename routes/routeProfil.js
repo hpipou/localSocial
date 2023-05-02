@@ -94,7 +94,24 @@ route.post("/new",(req,res)=>{
     function changeUserInfo(uuidProfil){
         models.User.update({isProfil:true, uuidProfil:uuidProfil}, {where:{id:tokenDecoded.id}})
         .then(()=>{
-            return res.status(200).json({"success":"PROFIL CREATED"})
+            const token = jwt.sign({
+                            "id":tokenDecoded.id,
+                            "username":tokenDecoded.username,
+                            "role":tokenDecoded.role,
+                            "isProfil":true,
+                            "uuidProfil":uuidProfil
+                            }, 
+                            process.env.SECTOKEN,
+                            {expiresIn:'48h'})
+            return res.status(201).json({
+                                    "success":"PROFIL CREATED",
+                                    "token":token,
+                                    "id":tokenDecoded.id,
+                                    "username":tokenDecoded.username,
+                                    "role":tokenDecoded.role,
+                                    "isProfil":true,
+                                    "uuidProfil":uuidProfil
+                                })
         })
         .catch((error)=>{return res.status(502).json(error)})
     }
