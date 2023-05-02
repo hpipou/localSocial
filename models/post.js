@@ -13,7 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Post.belongsTo(models.User, {foreignKey:{name:'uuidUser', allowNull: false}}),
       Post.belongsTo(models.Profil, {foreignKey:{name:'uuidProfil', allowNull: false}}),
-      Post.hasMany(models.Comment)
+      Post.hasMany(models.Comment),
+      Post.hasMany(models.Like)
     }
   }
   Post.init({
