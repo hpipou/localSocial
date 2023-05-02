@@ -8,6 +8,10 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(cors())
 
+// Helmet pour sécuriser automatiquement divers en-têtes HTTP
+const helmet = require("helmet");
+app.use(helmet());
+
 // token verification
 const tokenVerif = require("./middleware/tokenVerification")
 
